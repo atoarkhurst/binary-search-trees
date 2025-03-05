@@ -56,9 +56,7 @@ export class Tree {
     }
 
     // insert a new value
-    insert(value) {
-
-        let root = this.root;
+    insert(value, root = this.root) {
         
         // edge case: empty tree
         if (root === null) {
@@ -71,8 +69,11 @@ export class Tree {
         }
 
         if (value < root.data) {
-            root.value = this.insert(root.left)
+            root.left = this.insert(value, root.left);
+        } else if (value > root.data) {
+            root.right = this.insert(value, root.right);
         }
+        return root;
     }
 }
 
