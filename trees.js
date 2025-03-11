@@ -75,6 +75,71 @@ export class Tree {
         }
         return root;
     }
+
+    // gets successor of value when right child is not empty
+    findSuccesor(curr) {
+        curr = curr.right;
+        while (curr !== null && curr.left !== null) {
+            curr = curr.left;
+        }
+        return curr;
+    }
+
+    // delete item from tree
+    deleteItem(value, root = this.root) {
+
+        //edge case: empty tree
+        if (root.data === null) {
+            return root;
+        }
+
+        // if searching for key in a subtree
+        if (root.data > value) {
+            root.left = this.deleteItem(value, root.left);
+        } else if (root.data < value) {
+            root.right = this.deleteItem(value, root.right);
+        } else {
+            // if value matches the subtree
+            // if there is no left subtree or none
+            if (root.left === null) {
+                return root.right;
+            }
+
+            // if there is no right subtree or nonce
+            if (root.right === null) {
+                return root.left;
+            }
+
+            // if both left and right subtrees 
+
+            let successor = this.findSuccesor(root); 
+
+            root.data = successor.data;
+            root.right = this.deleteItem(successor.data, root.right);
+        }
+
+        return root;
+    }
+
+    // find item from tree
+    find(value, root = this.root) {
+
+        //edge case: empty tree
+        if (root === null) {
+            return null;
+        }
+
+
+        if (root.data > value) {
+            // console.log(root.data);
+            return this.find(value, root.left);
+        } else if (root.data < value) {
+            // console.log(root.data);
+            return this.find(value, root.right);
+        } else {
+            return root;
+        }
+    }
 }
 
 
