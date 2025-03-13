@@ -140,6 +140,48 @@ export class Tree {
             return root;
         }
     }
+
+    levelOrder(callback) {
+
+        //check if callback function is provided
+        if (callback === null || typeof callback !== "function") {
+            throw new Error("Callback function is required for levelOrder traversal.")
+        }
+
+        if (this.root === null) {
+            return;
+        }
+
+        let root = this.root;
+        let arr = [];
+        let item;
+
+        arr.push(root);
+
+        while(arr.length > 0 ) {
+            item = arr.shift();
+            callback(item);
+
+            if (item.left){
+                arr.push(item.left);
+            }
+
+            if (item.right){
+                arr.push(item.right);
+            }
+        }
+    }
+
+    preOrder(callback) {
+
+        //check if callback function is provided
+        if (callback === null || typeof callback !== "function") {
+            throw new Error("Callback function is required for levelOrder traversal.")
+        }
+
+        
+
+    }
 }
 
 

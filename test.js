@@ -9,6 +9,8 @@ let root = tree.root;
 prettyPrint(root);
 
 
-let found = tree.find(3);
+function callback (node) {
+    console.log(node);
+}
 
-console.log(found);
+tree.levelOrder(callback);
