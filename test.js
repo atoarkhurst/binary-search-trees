@@ -13,4 +13,4 @@ function callback (node) {
     console.log(node);
 }
 
-tree.levelOrder(callback);
+tree.inOrder(callback);

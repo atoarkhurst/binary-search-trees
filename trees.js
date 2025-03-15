@@ -172,16 +172,75 @@ export class Tree {
         }
     }
 
-    preOrder(callback) {
+    preOrder(callback, root = this.root) {
 
         //check if callback function is provided
         if (callback === null || typeof callback !== "function") {
             throw new Error("Callback function is required for levelOrder traversal.")
         }
 
-        
+        if (root === null) {
+            return;
+        }
+
+        callback(root);
+
+        if (root.left) {
+            this.preOrder(callback, root.left);
+        }
+
+        if (root.right) {
+            this.preOrder(callback, root.right);
+        }
+    }
+
+    postOrder(callback, root = this.root) {
+
+        //check if callback function is provided
+        if (callback === null || typeof callback !== "function") {
+            throw new Error("Callback function is required for levelOrder traversal.")
+        }
+
+        if (root === null) {
+            return;
+        }
+
+        if (root.left) {
+            this.postOrder(callback, root.left);
+        }
+
+        if (root.right) {
+            this.postOrder(callback, root.right);
+        }
+
+        callback(root);
 
     }
+
+    inOrder(callback, root = this.root) {
+
+         //check if callback function is provided
+         if (callback === null || typeof callback !== "function") {
+            throw new Error("Callback function is required for levelOrder traversal.")
+        }
+
+        if (root === null) {
+            return;
+        }
+
+        if (root.left) {
+            this.inOrder(callback, root.left);
+        }
+
+        callback(root);
+
+        if (root.right) {
+            this.inOrder(callback, root.right);
+        }
+
+
+    }
+    
 }
 
 
