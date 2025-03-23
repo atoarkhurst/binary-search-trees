@@ -237,8 +237,70 @@ export class Tree {
         if (root.right) {
             this.inOrder(callback, root.right);
         }
+    }
 
+    height(node) {
 
+        //check if node exists 
+        if (node === null) {
+            return -1;
+        }
+
+        let leftHeight;
+        let rightHeight;
+
+        leftHeight = this.height(node.left);
+
+        rightHeight = this.height(node.right);
+
+        return 1 + Math.max(leftHeight, rightHeight);
+
+        
+    }
+
+    depth(node, root = this.root, count = 0) {
+
+        if (root === null) {
+            return null;
+        }
+
+        if (node === null) {
+            return -1;
+        }
+
+        if ( node === root) {
+            return count;
+        } 
+
+        if ( root.data > node.data) {
+            count++;
+            return this.depth(node, root.left, count);
+        } else if ( root.data < node.data ) {
+            count++;
+            return this.depth(node, root.right, count);
+        }
+    }
+
+    isBalanced(root = this.root) {
+
+        if (root === null) {
+            return true
+        }
+
+        let leftHeight = this.height(root.left);
+        let rightHeight = this.height(root.right);
+
+        return (Math.abs(leftHeight - rightHeight) <= 1)
+            && this.isBalanced(root.left)
+            && this.isBalanced(root.right)
+    }
+
+    rebalance(root = this.root){
+        let arr = [];
+
+        this.inOrder(node => arr.push(node.data));
+
+        this.root = this.buildTree(arr);
     }
     
 }
@@ -253,6 +315,16 @@ function sortArray (array) {
     return array.sort(function(a,b){return a - b});
 }
 
+export function generateNums(count) {
+    let arr = [];
+    while (arr.length < count) {
+        let num = Math.floor(Math.random() * 100) + 1;
+        arr.push(num);
+    }
+
+    return arr;
+}
+
 export const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -265,4 +337,4 @@ export const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node.left !== null) {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
-  };
+};
